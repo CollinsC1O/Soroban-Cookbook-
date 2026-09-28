@@ -41,7 +41,7 @@ The Diamond pattern splits a contract's logic into multiple implementation contr
 ## Project Structure
 
 ```text
-examples/advanced/05-diamond-security/
+examples/advanced/19-diamond-security/
 ├── Cargo.toml
 ├── README.md
 └── src/

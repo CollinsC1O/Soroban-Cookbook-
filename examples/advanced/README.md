@@ -2,6 +2,15 @@
 
 This category contains examples of complex systems and advanced architectural patterns for experienced Soroban developers. These examples tackle sophisticated problems and often involve multi-contract interactions and intricate state management.
 
+## Directory Organization
+
+⚠️ **Note on Numbering:** Directory prefixes provide a suggested learning progression, with each example having a unique identifier. Recent reorganization (resolving issue #1099) established unique prefixes for all examples:
+- Security primitives: `05-rate-limiting`, `15-reentrancy-guard`, `16-hierarchical-access-control`
+- Bridge security: `17-bridge-security`
+- Diamond pattern: `18-diamond-facets`, `19-diamond-security`
+- Optimization: `20-batch-transfer`
+- Cryptographic primitives: `21-merkle-proofs`
+
 ## What's Inside?
 
 - **Complex Authorization**: Patterns like threshold signatures and multi-party authorization for high-security applications.
@@ -24,7 +33,7 @@ This category contains examples of complex systems and advanced architectural pa
 - [`03-oracle-pattern`](./03-oracle-pattern/) — Basic oracle with freshness checks
 - [`03-proxy-admin`](./03-proxy-admin/) — Admin-authenticated upgrade proposals with timelock and emergency pause
 - [`04-circuit-breaker`](./04-circuit-breaker/) — Emergency pause and auto-recovery pattern
-- [`05-bridge-security`](./05-bridge-security/) — Rate limiting, pause, challenge window, and fraud-proof patterns for bridge releases
+- [`17-bridge-security`](./17-bridge-security/) — Rate limiting, pause, challenge window, and fraud-proof patterns for bridge releases
 - [`05-rate-limiting`](./05-rate-limiting/) — Per-user time- and amount-based rate limiting with admin overrides
 - [`06-beacon-management`](./06-beacon-management/) — Versioned beacon management with rollback support
 - [`07-trusted-forwarder`](./07-trusted-forwarder/) — Meta-transaction trusted forwarder pattern
@@ -50,8 +59,8 @@ This category contains examples of complex systems and advanced architectural pa
 Screen-recorded walkthroughs of the advanced patterns are planned but not yet
 produced. Planned topics:
 
-- Diamond multi-facet proxy pattern (`05-diamond-facets`, `05-diamond-security`)
-- Bridge security: rate limiting, challenge windows, fraud proofs (`05-bridge-security`)
+- Diamond multi-facet proxy pattern (`18-diamond-facets`, `19-diamond-security`)
+- Bridge security: rate limiting, challenge windows, fraud proofs (`17-bridge-security`)
 - Price oracle: median aggregation, TWAP, staleness handling (`06-price-oracle`)
 - Meta-transactions: trusted forwarder and gasless relayer (`03-gasless-relayer`, `07-trusted-forwarder`)
 - Upgrade governance: timelocks and versioned migrations (`07-upgrade-patterns`, `10-contract-migrations`)

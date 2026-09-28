@@ -122,7 +122,7 @@ This document provides a security analysis for each advanced pattern in the cook
 
 ## 5. Bridge Security
 
-**Contract:** `examples/advanced/05-bridge-security/`
+**Contract:** `examples/advanced/17-bridge-security/`
 
 ### Known Vulnerabilities
 | Vulnerability | Severity | Description |
@@ -170,7 +170,7 @@ This document provides a security analysis for each advanced pattern in the cook
 
 ## 7. Diamond Pattern
 
-**Contracts:** `examples/advanced/05-diamond-facets/`, `examples/advanced/05-diamond-security/`, `examples/advanced/06-diamond-pattern/`
+**Contracts:** `examples/advanced/18-diamond-facets/`, `examples/advanced/19-diamond-security/`, `examples/advanced/06-diamond-pattern/`
 
 ### Known Vulnerabilities
 | Vulnerability | Severity | Description |
@@ -241,7 +241,7 @@ This document provides a security analysis for each advanced pattern in the cook
 
 ## 10. Hierarchical Access Control
 
-**Contract:** `examples/advanced/05-hierarchical-access-control/`
+**Contract:** `examples/advanced/16-hierarchical-access-control/`
 
 ### Known Vulnerabilities
 | Vulnerability | Severity | Description |
@@ -287,7 +287,7 @@ This document provides a security analysis for each advanced pattern in the cook
 
 ## 12. Merkle Proofs
 
-**Contract:** `examples/advanced/05-merkle-proofs/`
+**Contract:** `examples/advanced/21-merkle-proofs/`
 
 ### Known Vulnerabilities
 | Vulnerability | Severity | Description |
@@ -310,7 +310,7 @@ This document provides a security analysis for each advanced pattern in the cook
 
 ## 13. Reentrancy Guard
 
-**Contract:** `examples/advanced/05-reentrancy-guard/`
+**Contract:** `examples/advanced/15-reentrancy-guard/`
 
 ### Known Vulnerabilities
 | Vulnerability | Severity | Description |

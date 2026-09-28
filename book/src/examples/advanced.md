@@ -70,7 +70,7 @@ let value = client.get_value_strict(); // errors if stale
 
 ---
 
-### [05-diamond-security](../examples/advanced/05-diamond-security/)
+### [19-diamond-security](../examples/advanced/19-diamond-security/)
 **Secure Multi-Facet Proxy (Diamond)** with access controls, upgrade safety, and isolated namespaced storage.
 
 **Key Concepts:**

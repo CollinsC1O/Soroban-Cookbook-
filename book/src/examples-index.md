@@ -523,8 +523,8 @@ client.grant_role(&admin, &ROLE_MINTER, &alice);
 // Code snippet coming soon
 ```
 
-### 05 Batch Transfer
-[View Source](../examples/advanced/05-batch-transfer)
+### 20 Batch Transfer
+[View Source](../examples/advanced/20-batch-transfer)
 
 [Live Demo](https://soroban.stellar.org/docs)
 
@@ -535,8 +535,8 @@ pub struct Transfer {
 }
 ```
 
-### 05 Bridge Security
-[View Source](../examples/advanced/05-bridge-security)
+### 17 Bridge Security
+[View Source](../examples/advanced/17-bridge-security)
 
 [Live Demo](https://soroban.stellar.org/docs)
 
@@ -544,8 +544,8 @@ pub struct Transfer {
 // Code snippet coming soon
 ```
 
-### 05 Diamond Facets
-[View Source](../examples/advanced/05-diamond-facets)
+### 18 Diamond Facets
+[View Source](../examples/advanced/18-diamond-facets)
 
 [Live Demo](https://soroban.stellar.org/docs)
 
