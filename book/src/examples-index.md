@@ -544,7 +544,7 @@ pub struct Transfer {
 // Code snippet coming soon
 ```
 
-### 05 Diamond Facets
+### 05 Diamond Facets (Router Orchestration)
 [View Source](../examples/advanced/05-diamond-facets)
 
 [Live Demo](https://soroban.stellar.org/docs)
@@ -553,6 +553,31 @@ pub struct Transfer {
 // Router atomically calls TokenFacet then RegistryFacet.
 // If either fails, the whole transaction reverts.
 router.mint_and_register(&admin, &recipient, &750, &key, &"metadata");
+```
+
+### 05 Diamond Security (Security-Focused)
+[View Source](../examples/advanced/05-diamond-security)
+
+[Live Demo](https://soroban.stellar.org/docs)
+
+```rust
+// Access control: facets can only be invoked through the Diamond Proxy
+diamond.add_facet(&admin, &facet_addr, &functions)?;
+diamond.execute(&function_name, &args)?; // Routes to authorized facet
+```
+
+### 06 Diamond Pattern (Canonical EIP-2535)
+[View Source](../examples/advanced/06-diamond-pattern)
+
+[Live Demo](https://soroban.stellar.org/docs)
+
+```rust
+// Full diamond-cut: Add, Replace, Remove selectors
+diamond.diamond_cut(&admin, &cuts);
+
+// Diamond-loupe introspection
+let facets = diamond.facets(); // All facets + selectors
+let addr = diamond.facet_address(&selector); // Fallback dispatch
 ```
 
 ### Contract Registry

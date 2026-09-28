@@ -170,7 +170,14 @@ This document provides a security analysis for each advanced pattern in the cook
 
 ## 7. Diamond Pattern
 
-**Contracts:** `examples/advanced/05-diamond-facets/`, `examples/advanced/05-diamond-security/`, `examples/advanced/06-diamond-pattern/`
+**Contracts:** `examples/advanced/06-diamond-pattern/` (canonical), `examples/advanced/05-diamond-security/` (security-focused), `examples/advanced/05-diamond-facets/` (router orchestration)
+
+### Implementation Variants
+| Example | Focus | Key Features |
+| --- | --- | --- |
+| **06-diamond-pattern** | Canonical EIP-2535 | Full diamond-cut (Add/Replace/Remove), diamond-loupe introspection, fallback dispatch |
+| **05-diamond-security** | Security hardening | Direct-call protection, interface verification, namespaced storage API, upgrade safeguards |
+| **05-diamond-facets** | Facet coordination | Router orchestration, atomic cross-facet operations, inter-facet communication |
 
 ### Known Vulnerabilities
 | Vulnerability | Severity | Description |

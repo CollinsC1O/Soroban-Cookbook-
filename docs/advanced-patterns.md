@@ -154,10 +154,15 @@ Proxy pattern that delegates calls to an implementation contract. Admin can swap
 
 ## 7. Diamond Pattern
 
-**Location:** `examples/advanced/05-diamond-facets/`, `examples/advanced/05-diamond-security/`, `examples/advanced/06-diamond-pattern/`
+**Location:** `examples/advanced/06-diamond-pattern/` (canonical), `examples/advanced/05-diamond-security/` (security-focused), `examples/advanced/05-diamond-facets/` (router orchestration)
 
 ### What it does
-Splits contract logic across multiple facet contracts, each responsible for a subset of functions. A diamond proxy routes calls to the appropriate facet.
+Splits contract logic across multiple facet contracts, each responsible for a subset of functions. A diamond proxy routes calls to the appropriate facet, enabling granular upgrades and modular architecture.
+
+**Examples:**
+- **[06-diamond-pattern](../examples/advanced/06-diamond-pattern/)** — Canonical EIP-2535 adaptation with full diamond-cut operations (Add/Replace/Remove) and diamond-loupe introspection
+- **[05-diamond-security](../examples/advanced/05-diamond-security/)** — Security-hardened variant demonstrating access control per facet, interface verification, and storage collision prevention
+- **[05-diamond-facets](../examples/advanced/05-diamond-facets/)** — Router orchestration patterns showing atomic cross-facet operations
 
 ### Architecture Decisions
 - **Facet-selector mapping** stored in the diamond for O(1) dispatch.
