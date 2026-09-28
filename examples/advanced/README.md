@@ -20,11 +20,14 @@ This category contains examples of complex systems and advanced architectural pa
 - [`03-permit-pattern`](./03-permit-pattern/) — EIP-2612-style permit approvals with deadline enforcement
 - [`03-gasless-relayer`](./03-gasless-relayer/) — Meta-transaction relayer with nonce checks and signature verification
 - [`03-batch-builder`](./03-batch-builder/) — Staged batch builder with validation and gas estimation
+- [`03-rbac-modifiers`](./03-rbac-modifiers/) — **Canonical RBAC pattern**: composable role guards with flexible symbol-based roles
+- [`03-registry-access-controls`](./03-registry-access-controls/) — Registry-specific access controls with whitelist and fees
 - [`03-data-aggregation-oracle`](./03-data-aggregation-oracle/) — Data aggregation with manipulation detection and outlier filtering (Phase 5)
 - [`03-oracle-pattern`](./03-oracle-pattern/) — Basic oracle with freshness checks
 - [`03-proxy-admin`](./03-proxy-admin/) — Admin-authenticated upgrade proposals with timelock and emergency pause
 - [`04-circuit-breaker`](./04-circuit-breaker/) — Emergency pause and auto-recovery pattern
 - [`05-bridge-security`](./05-bridge-security/) — Rate limiting, pause, challenge window, and fraud-proof patterns for bridge releases
+- [`05-hierarchical-access-control`](./05-hierarchical-access-control/) — Advanced RBAC with role hierarchy and dynamic permission inheritance
 - [`05-rate-limiting`](./05-rate-limiting/) — Per-user time- and amount-based rate limiting with admin overrides
 - [`06-beacon-management`](./06-beacon-management/) — Versioned beacon management with rollback support
 - [`07-trusted-forwarder`](./07-trusted-forwarder/) — Meta-transaction trusted forwarder pattern
