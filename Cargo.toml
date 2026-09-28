@@ -65,6 +65,7 @@ members = [
     "examples/tokens/token-lock",
     "examples/governance/01-vote-delegation",
     "examples/governance/03-dao-treasury",
+    "examples/governance/03-proposal-lifecycle",
     "examples/intermediate/lazy-loading",
     "examples/intermediate/iterable-mapping",
     "examples/tokens/08-multi-token-balance-manager",
