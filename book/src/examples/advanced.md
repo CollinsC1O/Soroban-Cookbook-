@@ -2,7 +2,7 @@
 
 Complex protocols & optimizations for production systems.
 
-## 📋 Examples (5 currently)
+## 📋 Examples (7 currently)
 
 ### [01-multi-party-auth](../examples/advanced/01-multi-party-auth/)
 **Advanced multi-party authorization** beyond simple multisig.
@@ -105,6 +105,28 @@ let value = client.get_value_strict(); // errors if stale
 - Packed storage (grouping fields)
 - Lazy loading patterns
 - Batch operations
+
+---
+
+### [14-bridge-validators](../examples/advanced/14-bridge-validators/)
+**Bridge validator registry** with multi-signature threshold verification for cross-chain bridges.
+
+**Key Concepts:**
+- Multi-signature validation
+- Validator registry with rotation
+- Slashing mechanism
+
+---
+
+### [15-oracle-integration](../examples/advanced/15-oracle-integration/)
+**Asynchronous oracle request/response** pattern with secure callbacks and data validation.
+
+**Key Concepts:**
+- Off-chain data requests
+- Authenticated callbacks
+- Timestamp and freshness validation
+
+---
 
 **[More coming...]** Factories, bonding curves, merkle proofs.
 
