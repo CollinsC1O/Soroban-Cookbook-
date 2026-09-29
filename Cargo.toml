@@ -1,6 +1,19 @@
 [workspace]
 resolver = "2"
 
+# The `templates/*` directories intentionally contain their own Cargo
+# workspaces — each is a self-contained learner starter kit with its own
+# pinned `soroban-sdk`, meant to be copied out and built standalone. Because a
+# package cannot belong to two workspaces at once, they are excluded from the
+# root workspace rather than listed under `members`. Build them individually:
+#
+#     cd templates/token-dapp && cargo build
+exclude = [
+    "templates/dao-governance-dapp",
+    "templates/nft-marketplace-dapp",
+    "templates/token-dapp",
+]
+
 members = [
     "shared",
     "examples/hello-world",
@@ -74,6 +87,7 @@ members = [
     "tests/integration",
     "tests/security",
     "tests/docs-audit",
+    "tests/fuzz",
 ]
 
 [workspace.package]
