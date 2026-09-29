@@ -71,6 +71,7 @@ members = [
     "examples/governance/02-voting-time-constraints",
     "examples/intermediate/lazy-loading",
     "examples/intermediate/iterable-mapping",
+    "examples/intermediate/storage-pagination",
     "examples/tokens/08-multi-token-balance-manager",
     "examples/defi/12-farming-pool",
     "examples/defi/15-reward-strategies",
