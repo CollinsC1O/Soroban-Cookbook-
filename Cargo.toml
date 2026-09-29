@@ -10,6 +10,7 @@ members = [
     "examples/basics/13-queue-variants",
     "examples/basics/14-event-filtering",
     "examples/basics/14-fifo-queue",
+    "examples/basics/lazy-cache",
     "examples/intermediate/iterable-mappings",
     "examples/intermediate/03-priority-queue",
     "examples/intermediate/02-role-based-access-control",
