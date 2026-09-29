@@ -68,6 +68,7 @@ members = [
     "examples/intermediate/iterable-mapping",
     "examples/intermediate/storage-pagination",
     "examples/tokens/08-multi-token-balance-manager",
+    "examples/nfts/05-automatic-snapshot-triggers",
     "examples/defi/15-reward-strategies",
     "examples/advanced/12-real-world-case-studies",
     "examples/advanced/13-virtual-channel",

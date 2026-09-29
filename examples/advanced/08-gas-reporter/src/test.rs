@@ -1,13 +1,23 @@
 use super::*;
-use soroban_sdk::Env;
+use soroban_sdk::{contract, contractimpl, Env};
+
+#[contract]
+struct MeteredWork;
+
+#[contractimpl]
+impl MeteredWork {
+    pub fn run(env: Env) {
+        for _ in 0..100 {
+            let _ = env.ledger().timestamp();
+        }
+    }
+}
 
 #[test]
 fn test_measure() {
     let env = Env::default();
-    let count = measure(&env, |_env | {
-        let mut x = 0u64;
-        for i in 0..100 { x = x.wrapping_add(i); }
-        std::hint::black_box(x);
-    });
+    let contract_id = env.register_contract(None, MeteredWork);
+    let client = MeteredWorkClient::new(&env, &contract_id);
+    let count = measure(&env, |_| client.run());
     assert!(count > 0);
 }
