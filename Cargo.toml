@@ -76,6 +76,7 @@ members = [
     "examples/advanced/12-real-world-case-studies",
     "examples/advanced/13-virtual-channel",
     "examples/advanced/14-bridge-monitor",
+    "templates/nft-marketplace-dapp",
     "tests/integration",
     "tests/security",
     "tests/docs-audit",

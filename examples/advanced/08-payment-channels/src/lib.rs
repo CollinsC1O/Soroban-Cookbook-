@@ -1,19 +1,18 @@
-#![no_std]
+#![cfg_attr(target_family = "wasm", no_std)]
 
-use soroban_sdk::contract::{contract, contractimpl};
+use soroban_sdk::{contract, contractimpl, contracttype, symbol_short, xdr::ToXdr, Address, Bytes, BytesN, Env, Symbol};
 use soroban_sdk::token;
-use soroban_sdk::{Address, Bytes, BytesN, Env, Symbol};
 
-const TOKEN: Symbol = Symbol::new("TOKEN");
-const PUB_A: Symbol = Symbol::new("PUB_A");
-const PUB_B: Symbol = Symbol::new("PUB_B");
-const PART_A: Symbol = Symbol::new("PART_A");
-const PART_B: Symbol = Symbol::new("PART_B");
-const EXPIRY: Symbol = Symbol::new("EXPIRY");
-const BAL_A: Symbol = Symbol::new("BAL_A");
-const BAL_B: Symbol = Symbol::new("BAL_B");
-const SEQ: Symbol = Symbol::new("SEQ");
-const CLOSED: Symbol = Symbol::new("CLOSED");
+const TOKEN: Symbol = symbol_short!("TOKEN");
+const PUB_A: Symbol = symbol_short!("PUB_A");
+const PUB_B: Symbol = symbol_short!("PUB_B");
+const PART_A: Symbol = symbol_short!("PART_A");
+const PART_B: Symbol = symbol_short!("PART_B");
+const EXPIRY: Symbol = symbol_short!("EXPIRY");
+const BAL_A: Symbol = symbol_short!("BAL_A");
+const BAL_B: Symbol = symbol_short!("BAL_B");
+const SEQ: Symbol = symbol_short!("SEQ");
+const CLOSED: Symbol = symbol_short!("CLOSED");
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[contracttype]
@@ -57,29 +56,25 @@ fn is_closed(env: &Env) -> bool {
 }
 
 fn build_message(env: &Env, balance_a: &i128, balance_b: &i128, sequence: &u32) -> Bytes {
-    let mut msg = Bytes::new(env);
-    let contract_bytes = env.current_contract_address().as_contract().unwrap();
-    for byte in contract_bytes.iter() {
-        msg.push(byte);
-    }
-    for byte in balance_a.to_be_bytes().iter() {
-        msg.push(*byte);
-    }
-    for byte in balance_b.to_be_bytes().iter() {
-        msg.push(*byte);
-    }
-    for byte in sequence.to_be_bytes().iter() {
-        msg.push(*byte);
-    }
+    let mut msg = env.current_contract_address().to_xdr(env);
+    msg.append(&Bytes::from_slice(env, &balance_a.to_be_bytes()));
+    msg.append(&Bytes::from_slice(env, &balance_b.to_be_bytes()));
+    msg.append(&Bytes::from_slice(env, &sequence.to_be_bytes()));
     msg
 }
 
 #[contractimpl]
 impl PaymentChannel {
-    pub fn init(env: Env, token: Address, pubkey_a: BytesN<32>, pubkey_b: BytesN<32>, expiry: u64) {
+    pub fn init(
+        env: Env,
+        token: Address,
+        participant_a: Address,
+        participant_b: Address,
+        pubkey_a: BytesN<32>,
+        pubkey_b: BytesN<32>,
+        expiry: u64,
+    ) {
         assert!(!env.storage().instance().has(&TOKEN), "already initialized");
-        let participant_a = Address::from_ed25519(&pubkey_a);
-        let participant_b = Address::from_ed25519(&pubkey_b);
         env.storage().instance().set(&TOKEN, &token);
         env.storage().instance().set(&PUB_A, &pubkey_a);
         env.storage().instance().set(&PUB_B, &pubkey_b);
@@ -138,8 +133,8 @@ impl PaymentChannel {
         let msg = build_message(&env, &new_balance_a, &new_balance_b, &sequence);
         let pk_a: BytesN<32> = env.storage().instance().get(&PUB_A).unwrap();
         let pk_b: BytesN<32> = env.storage().instance().get(&PUB_B).unwrap();
-        assert!(env.verify_sig_ed25519(&msg, &sig_a, &pk_a), "invalid signature A");
-        assert!(env.verify_sig_ed25519(&msg, &sig_b, &pk_b), "invalid signature B");
+        env.crypto().ed25519_verify(&pk_a, &msg, &sig_a);
+        env.crypto().ed25519_verify(&pk_b, &msg, &sig_b);
         env.storage().instance().set(&BAL_A, &new_balance_a);
         env.storage().instance().set(&BAL_B, &new_balance_b);
         env.storage().instance().set(&SEQ, &sequence);
@@ -180,3 +175,6 @@ impl PaymentChannel {
         }
     }
 }
+
+#[cfg(test)]
+mod test;
