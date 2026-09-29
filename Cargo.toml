@@ -89,6 +89,7 @@ members = [
     "examples/governance/01-vote-delegation",
     "examples/governance/02-voting-time-constraints",
     "examples/governance/03-dao-treasury",
+    "examples/governance/03-proposal-lifecycle",
     "examples/intermediate/lazy-loading",
     "examples/intermediate/iterable-mapping",
     "examples/intermediate/storage-pagination",
