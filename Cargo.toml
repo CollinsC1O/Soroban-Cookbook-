@@ -66,6 +66,7 @@ members = [
     "examples/governance/01-vote-delegation",
     "examples/governance/01-simple-voting",
     "examples/governance/02-token-voting",
+    "examples/governance/06-timelock-governance",
     "examples/intermediate/lazy-loading",
     "examples/intermediate/iterable-mapping",
     "examples/tokens/08-multi-token-balance-manager",
