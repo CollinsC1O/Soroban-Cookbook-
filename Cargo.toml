@@ -62,6 +62,7 @@ members = [
     "examples/tokens/06-token-wrapper",
     "examples/tokens/07-token-metadata",
     "examples/tokens/10-pausable-permissions",
+    "examples/tokens/10-custom-token",
     "examples/tokens/token-lock",
     "examples/governance/01-vote-delegation",
     "examples/intermediate/lazy-loading",
