@@ -1,6 +1,6 @@
 # Beacon Management
 
-A Soroban cookbook example for managing upgradeable beacon contracts with per-beacon version history, rollback support, and multi-beacon registration.
+Versioned beacon management with rollback support. Manage multiple implementation versions and roll back if needed.
 
 ## Scope In the Upgradeability Sequence
 
@@ -13,23 +13,25 @@ This is step 5 of 6, following the
 	Continue to [Upgrade Patterns](../07-upgrade-patterns/) for direct WASM
 	upgrades and storage migration.
 
-## What it demonstrates
+## Role in Learning Path
 
-- Versioned beacon implementations
-- Rollback to the previous implementation
-- Independent state for multiple beacons
-- Admin-authenticated lifecycle operations
+This is the **fifth step** in the [upgrade patterns learning path](../README.md#upgrade-patterns--proxy-patterns). After learning basic and governed proxies, this example adds:
+- Version tracking for implementations
+- Rollback capabilities to previous versions
+- Version history maintenance
+- Safe rollback verification
+- Production recovery mechanisms
 
-## Contract API
+**Prerequisites:** Understand both beacon and direct upgrade patterns:
+- [`02-beacon-proxy`](../02-beacon-proxy/) — Basic beacon concept
+- [`03-beacon-proxy-factory`](../03-beacon-proxy-factory/) — Factory patterns
+- [`03-proxy-admin`](../03-proxy-admin/) — Governance patterns
+- [`04-upgradeable-proxy`](../04-upgradeable-proxy/) — Direct upgrade alternative
 
-- `initialize(admin)` — bootstraps the beacon manager
-- `register_beacon(admin, name, implementation)` — creates a new beacon with version 1
-- `upgrade_beacon(admin, name, implementation)` — appends a new version and activates it
-- `rollback_beacon(admin, name)` — reverts the beacon to the immediately previous version
-- `get_beacon(name)` — returns the current beacon state and history
-- `list_beacons()` — returns all registered beacon names
+**Next step:**
+- **[`07-upgrade-patterns`](../07-upgrade-patterns/)** — Complete upgrade strategies
 
-## Run tests
+## Key Concepts
 
 ```bash
 cargo test -p beacon-management
@@ -39,3 +41,15 @@ cargo test -p beacon-management
 
 Continue with [Upgrade Patterns](../07-upgrade-patterns/) for direct WASM
 replacement, versioned storage migration, and post-upgrade initialization.
+
+- Version tracking and history
+- Implementation rollback mechanisms
+- Previous version storage and retrieval
+- Safe downgrade paths
+- Emergency recovery procedures
+
+## Pattern Progression
+
+**Basic beacon → Beacon factory → Governance → Direct upgrade → Versioning → Full patterns**
+
+See the [advanced examples README](../README.md) for the full upgrade patterns learning path.

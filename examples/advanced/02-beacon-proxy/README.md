@@ -21,6 +21,20 @@ and [proxy admin controls](../03-proxy-admin/).
   fleet deployment; [Beacon Management](../06-beacon-management/) follows it
   for named beacons.
 
+## Key Concepts
+
+- Delegated call semantics (msg.sender preservation)
+- Implementation contract separation
+- Beacon contract pointing to current implementation
+- Storage layout isolation
+- Simple upgrade path
+
+## Pattern Progression
+
+**Basic beacon → Beacon factory → Governance → Direct upgrade → Versioning → Full patterns**
+
+See the [advanced examples README](../README.md) for the full upgrade patterns learning path.
+
 ## Run Tests
 
 ```bash
