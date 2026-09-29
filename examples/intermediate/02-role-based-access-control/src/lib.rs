@@ -203,3 +203,6 @@ impl RoleBasedAccessControl {
         }
     }
 }
+
+#[cfg(test)]
+mod test;
