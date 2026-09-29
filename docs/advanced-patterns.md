@@ -116,7 +116,7 @@ Lock-and-mint bridge pattern where assets are locked on the source chain and min
 
 ## 5. Bridge Security
 
-**Location:** `examples/advanced/05-bridge-security/`
+**Location:** `examples/advanced/17-bridge-security/`
 
 ### What it does
 Implements security guards for bridge operations: rate limiting, pause mechanisms, challenge windows, and fraud proofs.
@@ -154,7 +154,7 @@ Proxy pattern that delegates calls to an implementation contract. Admin can swap
 
 ## 7. Diamond Pattern
 
-**Location:** `examples/advanced/06-diamond-pattern/` (canonical), `examples/advanced/05-diamond-security/` (security-focused), `examples/advanced/05-diamond-facets/` (router orchestration)
+**Location:** `examples/advanced/06-diamond-pattern/` (canonical), `examples/advanced/18-diamond-facets/` (router orchestration), `examples/advanced/19-diamond-security/` (security-focused)
 
 ### What it does
 Splits contract logic across multiple facet contracts, each responsible for a subset of functions. A diamond proxy routes calls to the appropriate facet, enabling granular upgrades and modular architecture.
@@ -232,7 +232,7 @@ Assigns roles to addresses and restricts function access by role. Supports flexi
 
 ## 10. Hierarchical Access Control
 
-**Location:** `examples/advanced/05-hierarchical-access-control/`
+**Location:** `examples/advanced/16-hierarchical-access-control/`
 
 ### What it does
 Extends RBAC with hierarchical organization units. Permissions propagate down the hierarchy: department heads inherit team-level access.
@@ -270,7 +270,7 @@ Executes multiple contract calls in a single transaction with configurable atomi
 
 ## 12. Merkle Proofs
 
-**Location:** `examples/advanced/05-merkle-proofs/`
+**Location:** `examples/advanced/21-merkle-proofs/`
 
 ### What it does
 Validates data membership in a Merkle tree using on-chain proof verification. Enables off-chain data storage with on-chain verification.
@@ -289,7 +289,7 @@ Validates data membership in a Merkle tree using on-chain proof verification. En
 
 ## 13. Reentrancy Guard
 
-**Location:** `examples/advanced/05-reentrancy-guard/`
+**Location:** `examples/advanced/15-reentrancy-guard/`
 
 ### What it does
 Prevents reentrant calls by tracking execution state. Uses a mutex flag that blocks nested invocations.

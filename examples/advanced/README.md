@@ -20,6 +20,15 @@ covering a distinct upgradeability concern:
 6. [Upgrade Patterns](./07-upgrade-patterns/) — direct WASM upgrades, storage
 	migration, and initialization guards; no proxy or beacon system.
 
+## Directory Organization
+
+⚠️ **Note on Numbering:** Directory prefixes provide a suggested learning progression, with each example having a unique identifier. Recent reorganization (resolving issue #1099) established unique prefixes for all examples:
+- Security primitives: `05-rate-limiting`, `15-reentrancy-guard`, `16-hierarchical-access-control`
+- Bridge security: `17-bridge-security`
+- Diamond pattern: `18-diamond-facets`, `19-diamond-security`
+- Optimization: `20-batch-transfer`
+- Cryptographic primitives: `21-merkle-proofs`
+
 ## What's Inside?
 
 - **Complex Authorization**: Patterns like threshold signatures and multi-party authorization for high-security applications.
@@ -48,8 +57,8 @@ covering a distinct upgradeability concern:
 - [`03-oracle-pattern`](./03-oracle-pattern/) — Basic oracle with freshness checks
 - [`03-proxy-admin`](./03-proxy-admin/) — Admin-authenticated upgrade proposals with timelock and emergency pause
 - [`04-circuit-breaker`](./04-circuit-breaker/) — Emergency pause and auto-recovery pattern
-- [`05-bridge-security`](./05-bridge-security/) — Rate limiting, pause, challenge window, and fraud-proof patterns for bridge releases
-- [`05-hierarchical-access-control`](./05-hierarchical-access-control/) — Advanced RBAC with role hierarchy and dynamic permission inheritance
+- [`17-bridge-security`](./17-bridge-security/) — Rate limiting, pause, challenge window, and fraud-proof patterns for bridge releases
+- [`16-hierarchical-access-control`](./16-hierarchical-access-control/) — Advanced RBAC with role hierarchy and dynamic permission inheritance
 - [`05-rate-limiting`](./05-rate-limiting/) — Per-user time- and amount-based rate limiting with admin overrides
 - [`06-beacon-management`](./06-beacon-management/) — Versioned beacon management with rollback support
 - [`07-trusted-forwarder`](./07-trusted-forwarder/) — Meta-transaction trusted forwarder pattern
@@ -82,9 +91,9 @@ produced. Planned topics:
 
 - Diamond pattern suite:
   - **[`06-diamond-pattern`](./06-diamond-pattern/)** — Canonical EIP-2535 implementation (start here)
-  - **[`05-diamond-security`](./05-diamond-security/)** — Security-focused variant with access controls
-  - **[`05-diamond-facets`](./05-diamond-facets/)** — Router orchestration and inter-facet communication
-- Bridge security: rate limiting, challenge windows, fraud proofs (`05-bridge-security`)
+  - **[`19-diamond-security`](./19-diamond-security/)** — Security-focused variant with access controls
+  - **[`18-diamond-facets`](./18-diamond-facets/)** — Router orchestration and inter-facet communication
+- Bridge security: rate limiting, challenge windows, fraud proofs (`17-bridge-security`)
 - Price oracle: median aggregation, TWAP, staleness handling (`06-price-oracle`)
 - Meta-transactions: trusted forwarder and gasless relayer (`03-gasless-relayer`, `07-trusted-forwarder`)
 - Upgrade governance: timelocks and versioned migrations (`07-upgrade-patterns`, `10-contract-migrations`)

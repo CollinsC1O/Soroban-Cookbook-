@@ -92,8 +92,8 @@ let value = client.get_value_strict(); // errors if stale
 - Fallback dispatch mechanism via loupe introspection
 - Complete diamond-loupe API for on-chain discovery
 
-### [05-diamond-security](../examples/advanced/05-diamond-security/)
-**Diamond Security** — Security-hardened diamond variant focusing on access controls and upgrade safeguards.
+### [19-diamond-security](../examples/advanced/19-diamond-security/)
+**Secure Multi-Facet Proxy (Diamond)** with access controls, upgrade safety, and isolated namespaced storage.
 
 **Key Concepts:**
 - Access control per facet (restricting direct execution to proxy)

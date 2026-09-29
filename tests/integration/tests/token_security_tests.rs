@@ -23,7 +23,7 @@
 //! - **Reentrancy** (`token_wrapper`, `examples/tokens/06-token-wrapper`):
 //!   a `MaliciousUnderlyingToken` test double (mirroring the
 //!   `MaliciousContract` pattern in
-//!   `examples/advanced/05-reentrancy-guard/src/test.rs`) whose `transfer`
+//! `examples/advanced/15-reentrancy-guard/src/test.rs`) whose `transfer`
 //!   calls back into `TokenWrapper::wrap` before the outer call returns.
 //!   Demonstrated and fixed as part of this issue — see
 //!   `SECURITY_REVIEW_TOKEN_EXAMPLES.md` for the finding and
@@ -239,7 +239,7 @@ pub enum MaliciousKey {
 /// A hostile "underlying token" whose `transfer` calls back into
 /// `TokenWrapper::wrap` before returning — the attack `06-token-wrapper`'s
 /// `DataKey::Entered` guard exists to block. Mirrors the `MaliciousContract`
-/// pattern in `examples/advanced/05-reentrancy-guard/src/test.rs`.
+/// pattern in `examples/advanced/15-reentrancy-guard/src/test.rs`.
 #[contract]
 pub struct MaliciousUnderlyingToken;
 
@@ -247,7 +247,7 @@ pub struct MaliciousUnderlyingToken;
 impl MaliciousUnderlyingToken {
     /// `attacking`: whether `transfer` should try to reenter `wrap` (matches
     /// the `attack_type` parameter convention in
-    /// `05-reentrancy-guard/src/test.rs`'s `MaliciousContract::init`).
+    /// `15-reentrancy-guard/src/test.rs`'s `MaliciousContract::init`).
     pub fn init(env: Env, wrapper: Address, attacking: bool) {
         env.storage().instance().set(&MaliciousKey::Wrapper, &wrapper);
         env.storage().instance().set(&MaliciousKey::Attacking, &attacking);
