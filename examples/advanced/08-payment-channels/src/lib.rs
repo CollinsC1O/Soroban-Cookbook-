@@ -31,28 +31,31 @@ pub struct ChannelInfo {
 pub struct PaymentChannel;
 
 fn get_participant_a(env: &Env) -> Address {
-    env.storage().instance().get(&PART_A).unwrap()
+    env.storage().instance().get(&DataKey::ParticipantA).unwrap()
 }
 fn get_participant_b(env: &Env) -> Address {
-    env.storage().instance().get(&PART_B).unwrap()
+    env.storage().instance().get(&DataKey::ParticipantB).unwrap()
 }
 fn get_token(env: &Env) -> Address {
-    env.storage().instance().get(&TOKEN).unwrap()
+    env.storage().instance().get(&DataKey::Token).unwrap()
 }
 fn get_balance_a(env: &Env) -> i128 {
-    env.storage().instance().get(&BAL_A).unwrap()
+    env.storage().instance().get(&DataKey::BalanceA).unwrap()
 }
 fn get_balance_b(env: &Env) -> i128 {
-    env.storage().instance().get(&BAL_B).unwrap()
+    env.storage().instance().get(&DataKey::BalanceB).unwrap()
 }
 fn get_sequence(env: &Env) -> u32 {
-    env.storage().instance().get(&SEQ).unwrap()
+    env.storage().instance().get(&DataKey::Sequence).unwrap()
 }
 fn get_expiry(env: &Env) -> u64 {
-    env.storage().instance().get(&EXPIRY).unwrap()
+    env.storage().instance().get(&DataKey::Expiry).unwrap()
 }
 fn is_closed(env: &Env) -> bool {
-    env.storage().instance().get(&CLOSED).unwrap_or(false)
+    env.storage()
+        .instance()
+        .get(&DataKey::Closed)
+        .unwrap_or(false)
 }
 
 fn build_message(env: &Env, balance_a: &i128, balance_b: &i128, sequence: &u32) -> Bytes {
@@ -88,7 +91,7 @@ impl PaymentChannel {
     }
 
     pub fn deposit(env: Env, from: Address, amount: i128) {
-        assert!(is_closed(&env) == false, "channel closed");
+        assert!(!is_closed(&env), "channel closed");
         assert!(env.ledger().timestamp() < get_expiry(&env), "channel expired");
         assert!(amount > 0, "amount must be positive");
         from.require_auth();
@@ -98,10 +101,14 @@ impl PaymentChannel {
         let participant_b = get_participant_b(&env);
         if from == participant_a {
             let bal = get_balance_a(&env);
-            env.storage().instance().set(&BAL_A, &(bal + amount));
+            env.storage()
+                .instance()
+                .set(&DataKey::BalanceA, &(bal + amount));
         } else if from == participant_b {
             let bal = get_balance_b(&env);
-            env.storage().instance().set(&BAL_B, &(bal + amount));
+            env.storage()
+                .instance()
+                .set(&DataKey::BalanceB, &(bal + amount));
         } else {
             panic!("not a participant");
         }
@@ -152,14 +159,26 @@ impl PaymentChannel {
         let balance_a = get_balance_a(&env);
         let balance_b = get_balance_b(&env);
         if balance_a > 0 {
-            token::Client::new(&env, &token).transfer(&env.current_contract_address(), &participant_a, &balance_a);
+            token::Client::new(&env, &token).transfer(
+                &env.current_contract_address(),
+                &participant_a,
+                &balance_a,
+            );
         }
         if balance_b > 0 {
-            token::Client::new(&env, &token).transfer(&env.current_contract_address(), &participant_b, &balance_b);
+            token::Client::new(&env, &token).transfer(
+                &env.current_contract_address(),
+                &participant_b,
+                &balance_b,
+            );
         }
-        env.storage().instance().set(&CLOSED, &true);
-        env.storage().instance().set(&BAL_A, &0_i128);
-        env.storage().instance().set(&BAL_B, &0_i128);
+        env.storage().instance().set(&DataKey::Closed, &true);
+        env.storage()
+            .instance()
+            .set(&DataKey::BalanceA, &0_i128);
+        env.storage()
+            .instance()
+            .set(&DataKey::BalanceB, &0_i128);
     }
 
     pub fn get_info(env: Env) -> ChannelInfo {
