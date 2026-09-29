@@ -25,6 +25,10 @@ covering a distinct upgradeability concern:
 - **Complex Authorization**: Patterns like threshold signatures and multi-party authorization for high-security applications.
 - **State Machines**: Contracts that implement complex, multi-step workflows like time-delayed execution.
 - **Upgrade Governance**: Admin controls, timelocks, and emergency pauses around contract upgrades.
+- **Diamond Pattern Suite**: Three specialized implementations of the EIP-2535 diamond pattern:
+  - **Canonical** ([`06-diamond-pattern`](./06-diamond-pattern/)) — Complete EIP-2535 adaptation with diamond-cut and loupe
+  - **Security-focused** ([`05-diamond-security`](./05-diamond-security/)) — Hardened variant with access controls and interface verification
+  - **Router orchestration** ([`05-diamond-facets`](./05-diamond-facets/)) — Atomic cross-facet operations and inter-facet communication
 - **Bridge Defenses**: Inbound bridge release controls such as rate limiting, challenge windows, fraud proofs, and emergency pause.
 - **Gas & Ledger Optimization**: Techniques for building highly efficient and scalable contracts.
 - **Oracle Patterns**: Single-source oracle with authorized submission and freshness validation, plus consumer-side freshness, quorum, and circuit-breaker defenses.
@@ -48,6 +52,9 @@ covering a distinct upgradeability concern:
 - [`07-trusted-forwarder`](./07-trusted-forwarder/) — Meta-transaction trusted forwarder pattern
 - [`07-upgrade-patterns`](./07-upgrade-patterns/) — Direct WASM upgrade, versioned storage migration, init guards
 - [`04-upgradeable-proxy`](./04-upgradeable-proxy/) — Admin-gated implementation upgrades with proxy-owned storage preservation
+- [`05-diamond-facets`](./05-diamond-facets/) — Diamond router orchestration with atomic cross-facet operations
+- [`05-diamond-security`](./05-diamond-security/) — Security-hardened diamond with access controls, interface verification, and upgrade safeguards
+- [`06-diamond-pattern`](./06-diamond-pattern/) — **Canonical diamond pattern** (EIP-2535) with full diamond-cut and diamond-loupe introspection
 - [`08-batch-operations`](./08-batch-operations/) — Batch call interface with atomic rollback
 - [`09-fuzz-testing`](./09-fuzz-testing/) — Fuzzable claimable-balance contract with property tests and cargo-fuzz targets
 - [`09-storage-optimization`](./09-storage-optimization/) — Packed storage, lazy loading, and batch operations
@@ -68,7 +75,10 @@ covering a distinct upgradeability concern:
 Screen-recorded walkthroughs of the advanced patterns are planned but not yet
 produced. Planned topics:
 
-- Diamond multi-facet proxy pattern (`05-diamond-facets`, `05-diamond-security`)
+- Diamond pattern suite:
+  - **[`06-diamond-pattern`](./06-diamond-pattern/)** — Canonical EIP-2535 implementation (start here)
+  - **[`05-diamond-security`](./05-diamond-security/)** — Security-focused variant with access controls
+  - **[`05-diamond-facets`](./05-diamond-facets/)** — Router orchestration and inter-facet communication
 - Bridge security: rate limiting, challenge windows, fraud proofs (`05-bridge-security`)
 - Price oracle: median aggregation, TWAP, staleness handling (`06-price-oracle`)
 - Meta-transactions: trusted forwarder and gasless relayer (`03-gasless-relayer`, `07-trusted-forwarder`)

@@ -82,13 +82,33 @@ let value = client.get_value_strict(); // errors if stale
 
 ---
 
+### [06-diamond-pattern](../examples/advanced/06-diamond-pattern/) ⭐ Canonical
+**Diamond Pattern (EIP-2535)** — Full implementation with dynamic diamond-cut operations and diamond-loupe introspection.
+
+**Key Concepts:**
+- Diamond storage pattern with namespaced `DataKey` enum
+- Facet registry with Add/Replace/Remove operations
+- Function selector mapping with runtime registration
+- Fallback dispatch mechanism via loupe introspection
+- Complete diamond-loupe API for on-chain discovery
+
 ### [05-diamond-security](../examples/advanced/05-diamond-security/)
-**Secure Multi-Facet Proxy (Diamond)** with access controls, upgrade safety, and isolated namespaced storage.
+**Diamond Security** — Security-hardened diamond variant focusing on access controls and upgrade safeguards.
 
 **Key Concepts:**
 - Access control per facet (restricting direct execution to proxy)
-- Upgrade checks & interface supports verification
-- Namespaced key isolation to prevent shared storage collisions
+- Pre-flight interface verification before facet registration
+- Namespaced storage API to prevent storage collisions
+- Upgrade safeguards with duplicate detection
+
+### [05-diamond-facets](../examples/advanced/05-diamond-facets/)
+**Diamond Facets** — Router orchestration patterns demonstrating inter-facet communication.
+
+**Key Concepts:**
+- Atomic cross-facet operations (e.g., mint + register metadata)
+- Router coordination of multiple facets in single transactions
+- Facet interface patterns with typed clients
+- Storage isolation with distinct DataKey prefixes per facet
 
 ### [11-version-registry](../examples/advanced/11-version-registry/)
 **Contract version tracking** with history and rollback support.
