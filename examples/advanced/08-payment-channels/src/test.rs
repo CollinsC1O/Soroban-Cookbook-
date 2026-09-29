@@ -1,10 +1,8 @@
 #![cfg(test)]
 
 use ed25519_dalek::{Signer, SigningKey};
-use soroban_sdk::{contract, contractimpl};
 use soroban_sdk::testutils::Address as _;
-use soroban_sdk::xdr::ToXdr;
-use soroban_sdk::{symbol_short, Address, Bytes, BytesN, Env};
+use soroban_sdk::{contract, contractimpl, symbol_short, xdr::ToXdr, Address, Bytes, BytesN, Env};
 use soroban_sdk::token::{Client as TokenClient, StellarAssetClient as TokenAssetClient};
 
 use crate::{PaymentChannel, PaymentChannelClient};
@@ -44,11 +42,16 @@ fn pubkey_to_bytesn(env: &Env, kp: &SigningKey) -> BytesN<32> {
 }
 
 fn make_state_message(env: &Env, contract_id: &Address, balance_a: i128, balance_b: i128, sequence: u32) -> Bytes {
-    let mut msg = contract_id.clone().to_xdr(env);
+    let mut msg = contract_id.to_xdr(env);
     msg.append(&Bytes::from_slice(env, &balance_a.to_be_bytes()));
     msg.append(&Bytes::from_slice(env, &balance_b.to_be_bytes()));
     msg.append(&Bytes::from_slice(env, &sequence.to_be_bytes()));
     msg
+}
+
+fn sign_message(env: &Env, signer: &SigningKey, message: &Bytes) -> BytesN<64> {
+    let message_bytes = message.iter().collect::<std::vec::Vec<_>>();
+    BytesN::from_array(env, &signer.sign(&message_bytes).to_bytes())
 }
 
 fn setup() -> (Env, Address, Address, Address, SigningKey, SigningKey, Address) {
@@ -62,16 +65,17 @@ fn setup() -> (Env, Address, Address, Address, SigningKey, SigningKey, Address) 
     let addr_b = Address::generate(&env);
 
     // Deploy token
-    let token_id = env.register_contract(None, TestToken);
+    let token_id = env.register(TestToken, ());
     let token_admin = Address::generate(&env);
-    TestTokenClient::new(&env, &token_id).init(&token_admin);
+    let test_token_client = TestTokenClient::new(&env, &token_id);
+    test_token_client.init(&token_admin);
 
     let token_asset = TokenAssetClient::new(&env, &token_id);
     token_asset.mint(&addr_a, &1000);
     token_asset.mint(&addr_b, &1000);
 
     // Deploy payment channel
-    let pc_id = env.register_contract(None, PaymentChannel);
+    let pc_id = env.register(PaymentChannel, ());
     let pc_client = PaymentChannelClient::new(&env, &pc_id);
     let expiry = env.ledger().timestamp() + 1000;
     pc_client.init(&token_id, &addr_a, &addr_b, &pub_a, &pub_b, &expiry);
@@ -81,7 +85,7 @@ fn setup() -> (Env, Address, Address, Address, SigningKey, SigningKey, Address) 
 
 #[test]
 fn test_deposit_and_close() {
-    let (env, pc_id, addr_a, addr_b, kp_a, kp_b, token_id) = setup();
+    let (env, pc_id, addr_a, addr_b, _kp_a, _kp_b, token_id) = setup();
     let pc_client = PaymentChannelClient::new(&env, &pc_id);
     let token_client = TokenClient::new(&env, &token_id);
 
@@ -117,11 +121,8 @@ fn test_bidirectional_payment() {
     let new_b: i128 = 80;
     let seq: u32 = 1;
     let msg = make_state_message(&env, &pc_id, new_a, new_b, seq);
-    let msg_bytes = msg.to_buffer::<128>();
-    let sig_a = kp_a.sign(msg_bytes.as_slice());
-    let sig_b = kp_b.sign(msg_bytes.as_slice());
-    let sig_a_bytes = BytesN::from_array(&env, &sig_a.to_bytes());
-    let sig_b_bytes = BytesN::from_array(&env, &sig_b.to_bytes());
+    let sig_a_bytes = sign_message(&env, &kp_a, &msg);
+    let sig_b_bytes = sign_message(&env, &kp_b, &msg);
 
     pc_client.submit_state(&addr_a, &new_a, &new_b, &seq, &sig_a_bytes, &sig_b_bytes);
 
@@ -138,7 +139,7 @@ fn test_bidirectional_payment() {
 #[test]
 #[should_panic]
 fn test_invalid_signature() {
-    let (env, pc_id, addr_a, addr_b, kp_a, kp_b, token_id) = setup();
+    let (env, pc_id, addr_a, addr_b, _kp_a, kp_b, _token_id) = setup();
     let pc_client = PaymentChannelClient::new(&env, &pc_id);
 
     pc_client.deposit(&addr_a, &100);
@@ -151,10 +152,8 @@ fn test_invalid_signature() {
     let msg_bytes = msg.to_buffer::<128>();
     // Sign with a wrong key
     let wrong_kp = SigningKey::from_bytes(&[3u8; 32]);
-    let sig_bad = wrong_kp.sign(msg_bytes.as_slice());
-    let sig_bad_bytes = BytesN::from_array(&env, &sig_bad.to_bytes());
-    let sig_b = kp_b.sign(msg_bytes.as_slice());
-    let sig_b_bytes = BytesN::from_array(&env, &sig_b.to_bytes());
+    let sig_bad_bytes = sign_message(&env, &wrong_kp, &msg);
+    let sig_b_bytes = sign_message(&env, &kp_b, &msg);
 
     pc_client.submit_state(&addr_a, &new_a, &new_b, &seq, &sig_bad_bytes, &sig_b_bytes);
 }
@@ -162,7 +161,7 @@ fn test_invalid_signature() {
 #[test]
 #[should_panic(expected = "sequence must increase")]
 fn test_sequence_must_increase() {
-    let (env, pc_id, addr_a, addr_b, kp_a, kp_b, token_id) = setup();
+    let (env, pc_id, addr_a, addr_b, kp_a, kp_b, _token_id) = setup();
     let pc_client = PaymentChannelClient::new(&env, &pc_id);
 
     pc_client.deposit(&addr_a, &100);
@@ -172,11 +171,8 @@ fn test_sequence_must_increase() {
     let new_b: i128 = 80;
     let seq: u32 = 1;
     let msg = make_state_message(&env, &pc_id, new_a, new_b, seq);
-    let msg_bytes = msg.to_buffer::<128>();
-    let sig_a = kp_a.sign(msg_bytes.as_slice());
-    let sig_b = kp_b.sign(msg_bytes.as_slice());
-    let sig_a_bytes = BytesN::from_array(&env, &sig_a.to_bytes());
-    let sig_b_bytes = BytesN::from_array(&env, &sig_b.to_bytes());
+    let sig_a_bytes = sign_message(&env, &kp_a, &msg);
+    let sig_b_bytes = sign_message(&env, &kp_b, &msg);
     pc_client.submit_state(&addr_a, &new_a, &new_b, &seq, &sig_a_bytes, &sig_b_bytes);
 
     // Try to submit an older sequence

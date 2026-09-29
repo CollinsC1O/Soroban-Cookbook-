@@ -1,23 +1,11 @@
 use super::*;
-use soroban_sdk::{contract, contractimpl, Env};
-
-#[contract]
-struct MeteredWork;
-
-#[contractimpl]
-impl MeteredWork {
-    pub fn run(env: Env) {
-        for _ in 0..100 {
-            let _ = env.ledger().timestamp();
-        }
-    }
-}
+use soroban_sdk::{Bytes, Env};
 
 #[test]
 fn test_measure() {
     let env = Env::default();
-    let contract_id = env.register_contract(None, MeteredWork);
-    let client = MeteredWorkClient::new(&env, &contract_id);
-    let count = measure(&env, |_| client.run());
+    let count = measure(&env, |env| {
+        env.crypto().sha256(&Bytes::from_slice(env, b"metered operation"));
+    });
     assert!(count > 0);
 }

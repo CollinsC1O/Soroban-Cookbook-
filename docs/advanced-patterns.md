@@ -154,10 +154,15 @@ Proxy pattern that delegates calls to an implementation contract. Admin can swap
 
 ## 7. Diamond Pattern
 
-**Location:** `examples/advanced/05-diamond-facets/`, `examples/advanced/05-diamond-security/`, `examples/advanced/06-diamond-pattern/`
+**Location:** `examples/advanced/06-diamond-pattern/` (canonical), `examples/advanced/05-diamond-security/` (security-focused), `examples/advanced/05-diamond-facets/` (router orchestration)
 
 ### What it does
-Splits contract logic across multiple facet contracts, each responsible for a subset of functions. A diamond proxy routes calls to the appropriate facet.
+Splits contract logic across multiple facet contracts, each responsible for a subset of functions. A diamond proxy routes calls to the appropriate facet, enabling granular upgrades and modular architecture.
+
+**Examples:**
+- **[06-diamond-pattern](../examples/advanced/06-diamond-pattern/)** — Canonical EIP-2535 adaptation with full diamond-cut operations (Add/Replace/Remove) and diamond-loupe introspection
+- **[05-diamond-security](../examples/advanced/05-diamond-security/)** — Security-hardened variant demonstrating access control per facet, interface verification, and storage collision prevention
+- **[05-diamond-facets](../examples/advanced/05-diamond-facets/)** — Router orchestration patterns showing atomic cross-facet operations
 
 ### Architecture Decisions
 - **Facet-selector mapping** stored in the diamond for O(1) dispatch.
@@ -199,20 +204,29 @@ Beacon pattern where multiple proxy contracts point to a single beacon contract 
 
 ## 9. Role-Based Access Control
 
-**Location:** `examples/advanced/03-rbac-modifiers/`, `examples/advanced/03-registry-access-controls/`, `examples/advanced/03-proxy-admin/`
+**Canonical Location:** `examples/advanced/03-rbac-modifiers/`  
+**Also see:** `examples/intermediate/02-role-based-access-control/` (numeric hierarchy), `examples/advanced/05-hierarchical-access-control/` (permission inheritance), `examples/advanced/03-registry-access-controls/` (registry-specific)
 
 ### What it does
-Assigns roles to addresses and restricts function access by role. Supports role hierarchies, admin delegation, and role revocation.
+Assigns roles to addresses and restricts function access by role. Supports flexible symbol-based roles, composable guards (`only_role`, `any_role`), and role renunciation. The canonical pattern uses symbol-based roles for maximum flexibility.
 
 ### Architecture Decisions
-- **Role as `BytesN<32>` hash** prevents role name collisions.
-- **Default admin role** can manage other roles.
+- **Symbol-based roles** (not numeric hierarchy) allow custom role names without redeployment.
+- **Composable role guards** (`only_role`, `any_role`) protect functions with clear, reusable checks.
+- **Default admin role** can manage all other roles.
 - **Role renouncement** allows addresses to self-remove.
+- **Event-driven audit trail** emits events for every role change.
 
 ### When to use
 - Multi-user systems with distinct permission levels.
 - Admin + operator + user separation.
 - Delegated authority patterns.
+- Token contracts with minter/pauser/burner roles.
+
+### Alternative patterns
+- Use **02-role-based-access-control** for strict numeric hierarchies (Owner > Admin > Moderator > User).
+- Use **05-hierarchical-access-control** for dynamic permission inheritance and role hierarchies.
+- Use **03-registry-access-controls** for registry-specific whitelist/fee patterns.
 
 ---
 
