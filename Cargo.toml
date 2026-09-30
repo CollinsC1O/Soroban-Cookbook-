@@ -94,6 +94,7 @@ members = [
     "examples/governance/02-voting-time-constraints",
     "examples/governance/03-dao-treasury",
     "examples/governance/03-proposal-lifecycle",
+    "examples/governance/05-delegation",
     "examples/governance/01-simple-voting",
     "examples/governance/02-token-voting",
     "examples/governance/06-timelock-governance",
