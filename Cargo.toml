@@ -116,7 +116,6 @@ members = [
     "examples/defi/10-swap-liquidity",
     "examples/defi/11-amm-price-oracle",
     "examples/defi/staking-pool",
-    "templates/nft-marketplace-dapp",
     "tests/integration",
     "tests/security",
     "tests/docs-audit",
